@@ -111,7 +111,7 @@ socket.onclose = function(e) {
 
   
   //2a
-  var handle=0
+  
   if (window.DeviceMotionEvent){
     var entry = 2;
     var x = y= z= lastx = lasty= lastz= 0;
@@ -120,11 +120,9 @@ socket.onclose = function(e) {
           x=acc.x;
           y=acc.y;
           z=acc.z;
-          if(Math.abs(x-lastx)>entry || Math.abs(y-lasty)>entry || Math.abs(z-lastz)>entry){
-            if(handle==0){
-              handle=0;
+          if(Math.abs(x-lastx)>entry || Math.abs(y-lasty)>entry || Math.abs(z-lastz)>entry){     
             cxt.clearRect(0,0,canvas.width,canvas.height);}
-    }
+
           
   lastx = x;
   lasty = y;

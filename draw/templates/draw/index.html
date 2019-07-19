@@ -72,14 +72,15 @@
     
     // getting the URL (you may want to use for Exercise 3)
     var url = window.location.href;
-
+//url == 'wss://p3-websockets-lishanggeng-lishanggeng506740.codeanyapp.com/draw/?size=large'
    
 // create a new websocket connecting to the server
 var socket = new WebSocket('wss://p3-websockets-lishanggeng-lishanggeng506740.codeanyapp.com/ws/draw');
 // triggered when receiving a message from the server
 socket.onmessage = function(receivedMessage) {
 	// do something when you receive a message
-  if (true){
+  if (url == 'http://p3-websockets-lishanggeng-lishanggeng506740.codeanyapp.com/draw/?size=large'){
+    cxt.beginPath();
     var receivedMessage = JSON.parse(receivedMessage.data);
     cxt.moveTo(receivedMessage.x1,receivedMessage.y1);
     cxt.lineTo(receivedMessage.x2,receivedMessage.y2);
@@ -98,11 +99,14 @@ socket.onclose = function(e) {
   
   
   //1b
-  function getRandomColor() { //随机生成RGB颜色
-    var r = Math.floor(Math.random() * 256); //随机生成256以内r值
-    var g = Math.floor(Math.random() * 256); //随机生成256以内g值
-    var b = Math.floor(Math.random() * 256); //随机生成256以内b值
-    return `rgb(${r},${g},${b})`; }//返回rgb(r,g,b)格式颜色
+  function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
   
   

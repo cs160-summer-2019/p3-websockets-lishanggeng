@@ -79,7 +79,8 @@ var socket = new WebSocket('wss://p3-websockets-lishanggeng-lishanggeng506740.co
 // triggered when receiving a message from the server
 socket.onmessage = function(receivedMessage) {
 	// do something when you receive a message
-  if (url == 'http://p3-websockets-lishanggeng-lishanggeng506740.codeanyapp.com/draw/?size=large'){
+  if (true){
+    //url == 'http://p3-websockets-lishanggeng-lishanggeng506740.codeanyapp.com/draw/?size=large'
     cxt.beginPath();
     var receivedMessage = JSON.parse(receivedMessage.data);
     cxt.moveTo(receivedMessage.x1,receivedMessage.y1);
@@ -108,6 +109,41 @@ socket.onclose = function(e) {
   return color;
 }
 
+  
+  //2a
+  var handle=0
+  if (window.DeviceMotionEvent){
+    var entry = 2;
+    var x = y= z= lastx = lasty= lastz= 0;
+    window.addEventListener('devicemotion',function(){
+          var acc = event.accelerationIncludingGravity;
+          x=acc.x;
+          y=acc.y;
+          z=acc.z;
+          if(Math.abs(x-lastx)>entry || Math.abs(y-lasty)>entry || Math.abs(z-lastz)>entry){
+            if(handle==0){
+              handle=0;
+            cxt.clearRect(0,0,canvas.width,canvas.height);}
+    }
+          
+  lastx = x;
+  lasty = y;
+  lastz = z;
+  
+  }, false);
+  }else{
+    alert('your device does not support shaking');
+  }
+  
+  //2b
+  window.addEventListener('deviceorientation',(event)=>{
+    if(event.gamma >60){
+      rdmcolor = '#FF0000';
+      cxt.strokeStyle = rdmcolor;
+    }
+  }
+                         );
+                          
   
   
 

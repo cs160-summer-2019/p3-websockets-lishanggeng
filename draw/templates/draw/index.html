@@ -26,8 +26,10 @@
     var _x;
     var _y;
     var paintstat = false;
+    var rdmcolor = getRandomColor();
     paper.setup(canvas);
     var tool = new paper.Tool();
+    
   
     //make mouse functions
     tool.onMouseDown = function(event){
@@ -43,17 +45,22 @@
     
     tool.onMouseMove = function(event){
       if(paintstat){
+        cxt.beginPath();
+        var eachcolor = rdmcolor
         point = event.point;
+        cxt.strokeStyle = eachcolor;
         cxt.moveTo(_x,_y);
         cxt.lineTo(point.x,point.y);
         cxt.lineWidth = 2;
         cxt.stroke();
+        //create a var msg to send as a JSON object
         var msg ={
           status:paintstat,
           x1:_x,
           y1:_y,
           x2:point.x,
           y2:point.y,
+          color:cxt.strokeStyle,
         }
       var sg=JSON.stringify(msg)
       socket.send(sg);
@@ -77,6 +84,7 @@ socket.onmessage = function(receivedMessage) {
     cxt.moveTo(receivedMessage.x1,receivedMessage.y1);
     cxt.lineTo(receivedMessage.x2,receivedMessage.y2);
     cxt.lineWidth = 2;
+    cxt.strokeStyle = receivedMessage.color;
     cxt.stroke();
   }
 };
@@ -87,6 +95,14 @@ socket.onmessage = function(receivedMessage) {
 socket.onclose = function(e) {
     console.error('Chat socket closed unexpectedly');
 };
+  
+  
+  //1b
+  function getRandomColor() { //随机生成RGB颜色
+    var r = Math.floor(Math.random() * 256); //随机生成256以内r值
+    var g = Math.floor(Math.random() * 256); //随机生成256以内g值
+    var b = Math.floor(Math.random() * 256); //随机生成256以内b值
+    return `rgb(${r},${g},${b})`; }//返回rgb(r,g,b)格式颜色
 
   
   

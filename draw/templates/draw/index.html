@@ -121,21 +121,24 @@ socket.onclose = function(e) {
           y=acceleration.y;
           z=acceleration.z;
           if(Math.abs(x-lastx)>speed || Math.abs(y-lasty)>speed || Math.abs(z-lastz)>speed){     
-            cxt.clearRect(0,0,canvas.width,canvas.height);}
+            cxt.clearRect(0,0,canvas.width,canvas.height);
+          }
 
           
   lastx = x;
   lasty = y;
   lastz = z;
   
-  }, false);
+  },false);
   }else{
     alert('your device does not support shaking');
   }
   
+  
+ 
   //2b
   window.addEventListener('deviceorientation',function(event){
-    if(event.gamma >60){
+    if(event.gamma >30){
       rdmcolor = getRandomColor();
       cxt.strokeStyle = rdmcolor;
     }

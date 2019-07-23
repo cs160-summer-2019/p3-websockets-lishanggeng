@@ -113,21 +113,21 @@ socket.onclose = function(e) {
   //2a
   
   if (window.DeviceMotionEvent){
-    var speed = 2;
-    var x = y= z= lastx = lasty= lastz= 0;
+    var speed = 10;
+    var x = y= z= lx = ly= lz= 0;
     window.addEventListener('devicemotion',function(){
-          var acceleration = event.accelerationIncludingGravity;
+          var acceleration = event.acceleration;
           x=acceleration.x;
           y=acceleration.y;
           z=acceleration.z;
-          if(Math.abs(x-lastx)>speed || Math.abs(y-lasty)>speed || Math.abs(z-lastz)>speed){     
+          if(Math.abs(x-lx)>speed || Math.abs(y-ly)>speed || Math.abs(z-lz)>speed){     
             cxt.clearRect(0,0,canvas.width,canvas.height);
           }
 
           
-  lastx = x;
-  lasty = y;
-  lastz = z;
+  lx = x;
+  ly = y;
+  lz = z;
   
   },false);
   }else{
@@ -137,13 +137,13 @@ socket.onclose = function(e) {
   
  
   //2b
-  window.addEventListener('deviceorientation',function(event){
+ /*window.addEventListener('deviceorientation',function(event){
     if(event.gamma >30){
       rdmcolor = getRandomColor();
       cxt.strokeStyle = rdmcolor;
     }
   }
-                         );
+                         );*/
                           
   
   
